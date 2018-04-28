@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTreeCodeApproach", "RTreeCodeApproach\RTreeCodeApproach.csproj", "{39FFE2F0-B5E0-46D8-8979-4C52D928FC47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearCodeApproach", "LinearCodeApproach\LinearCodeApproach.csproj", "{4162D478-7F1A-43C1-ABB5-9F34656EC2F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{39FFE2F0-B5E0-46D8-8979-4C52D928FC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39FFE2F0-B5E0-46D8-8979-4C52D928FC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39FFE2F0-B5E0-46D8-8979-4C52D928FC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4162D478-7F1A-43C1-ABB5-9F34656EC2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4162D478-7F1A-43C1-ABB5-9F34656EC2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4162D478-7F1A-43C1-ABB5-9F34656EC2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4162D478-7F1A-43C1-ABB5-9F34656EC2F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
