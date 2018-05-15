@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,8 @@ namespace RTreeCodeApproach
 {
     public class Search
     {
+        private double sum;
+
         //Calculates the minimum distance from a point to a minimum bounding rectangle
         double MinDistance(double objLng, double objLat, double mbrMinY, double mbrMaxY, double mbrMinX, double mbrMaxX)
         {
@@ -90,7 +94,7 @@ namespace RTreeCodeApproach
                 else //object
                 {
                     /*** search for all keywords ***/
-                    //if(keywords.All(kw => element.Keywords.Contains(kw)))
+                    //if (keywords.All(kw => element.Keywords.Contains(kw)))
                     //    result.Add(element);
 
                     /*** search for any keywords ***/
@@ -105,25 +109,65 @@ namespace RTreeCodeApproach
             }
         }
 
+        public List<Restaurant> LoadData()
+        {
+            var allRest = new List<Restaurant>();           
+
+            using (var reader = new StreamReader(@"C:\Users\Tolnes\Documents\Sync\Infomations teknologi\6. Semester\Bachelor\500k.csv"))
+            {
+                int i = 0;
+                while (!reader.EndOfStream)
+                {
+                    i++;
+                    var line = reader.ReadLine();
+                    var values = line.Split('|');                   
+                    if (values.Length == 6)
+                    {
+                        var kw = values[5].Split(';');
+                        allRest.Add(new Restaurant(values[4], kw.ToList(), Convert.ToDouble(values[2]), Convert.ToDouble(values[3]), Convert.ToDouble(values[2]), Convert.ToDouble(values[3])));
+                    }
+                    else
+                    {
+                        Console.WriteLine(i.ToString());
+                        Console.WriteLine(values[1]);
+                    }
+                }
+                return allRest;
+            }
+        }
 
         //Use this to initalize the R tree and invoke the INN algorithm
         public void SearchWithINN()
         {
-            var tree = new RBush<Restaurant>(maxEntries: 4);
+            var tree = new RBush<Restaurant>();
 
-            var restaurant = new Restaurant();
-            var allRest = new List<Restaurant>();
-            allRest = restaurant.GetAllRestaurants();
-
-            tree.BulkLoad(allRest);
+            tree.BulkLoad(LoadData());
+            Console.WriteLine("Dataloaded");
 
             var result = new List<ISpatialData>();
             var keywords = new List<string>();
-            //keywords.Add("pizza");
-            keywords.Add("fanta");
-            keywords.Add("beer");
+            keywords.Add("Italian");
+            keywords.Add("Pizza");
+            keywords.Add("Pasta");
+            //keywords.Add("Hotdog");
+            //keywords.Add("Burger");
 
-            IncNearest(9.993267, 57.017825, tree, 5, keywords, out result); //query location Føtex Aalborg Øst
+            var sw = new Stopwatch();
+            var timeList = new List<string>();
+            
+
+            for (int i = 0; i <= 100; i++)
+            {
+                sw.Start();
+                IncNearest(9.993267, 57.017825, tree, 30, keywords, out result);
+                sw.Stop();
+                var time = sw.Elapsed.TotalMilliseconds;
+                timeList.Add(Convert.ToString(time));
+                Console.WriteLine(time);
+                sw.Reset();
+            }
+
+            //IncNearest(9.993267, 57.017825, tree, 5, keywords, out result); //query location Føtex Aalborg Øst
 
             foreach (var rest in result)
             {

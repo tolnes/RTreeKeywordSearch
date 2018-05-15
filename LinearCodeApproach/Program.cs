@@ -22,7 +22,7 @@ namespace LinearCodeApproach
             keywords.Add("cola");
 
             var result = new List<Restaurant>();
-            LinearSearch(lat, lng, allRest, 2, keywords, out result);
+            LinearSearch(lat, lng, allRest, 10, keywords, out result);
 
             foreach (var rest in result)
             {
@@ -44,12 +44,12 @@ namespace LinearCodeApproach
             foreach (var rest in nearby)
             {
                 /*** search for all keywords ***/
-                //if (keywords.All(kw => rest.Keywords.Contains(kw)))
-                //    result.Add(rest);
+                if (keywords.All(kw => rest.Keywords.Contains(kw)))
+                    result.Add(rest);
 
                 /*** search for any keywords ***/
-                if (keywords.Any(kw => rest.Keywords.Contains(kw)))
-                    result.Add(rest);
+                //if (keywords.Any(kw => rest.Keywords.Contains(kw)))
+                //    result.Add(rest);
 
                 if (result.Count == k)
                 {
