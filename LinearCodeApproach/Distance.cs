@@ -10,6 +10,7 @@ namespace LinearCodeApproach
     {
         const double PI = 3.141592653589793;
         const double Radius = 6371;
+        static int distanceCalculated;
 
         static public double Radians(double x)
         {
@@ -28,15 +29,17 @@ namespace LinearCodeApproach
 
         static public List<Restaurant> CalculateDistance(List<Restaurant> listOfAllObjects, double userLocationLng, double userLocationLat)
         {
-            var calculatedObjects = new List<Restaurant>();
+            var calculatedObjects = new List<Restaurant>();            
 
             foreach (var obj in listOfAllObjects)
             {
                 var distance = DistanceBetweenObjects(userLocationLng, userLocationLat, obj.Longitude, obj.Latitude);                
                 obj.Distance = distance;
                 calculatedObjects.Add(obj);
+                distanceCalculated++;
             }
 
+            Console.WriteLine(distanceCalculated);
             return calculatedObjects;
         }
     }

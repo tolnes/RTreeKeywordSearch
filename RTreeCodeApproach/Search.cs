@@ -10,7 +10,7 @@ namespace RTreeCodeApproach
 {
     public class Search
     {
-        private double sum;
+        private int distanceCalculated = 0;
 
         //Calculates the minimum distance from a point to a minimum bounding rectangle
         double MinDistance(double objLng, double objLat, double mbrMinY, double mbrMaxY, double mbrMinX, double mbrMaxX)
@@ -57,7 +57,7 @@ namespace RTreeCodeApproach
         /// <param name="k">Desired number of results</param>
         /// <param name="keywords">User defined keywords</param>
         /// <param name="result">List to store results</param>
-        public void IncNearest(double lat, double lng, RBush<Restaurant> tree, int k,
+        private void IncNearest(double lat, double lng, RBush<Restaurant> tree, int k,
             List<string> keywords, out List<ISpatialData> result)
         {
             PriorityQueue<ISpatialData> queue = new PriorityQueue<ISpatialData>();
@@ -89,6 +89,7 @@ namespace RTreeCodeApproach
                         double priority = MinDistance(lng, lat, obj.Envelope.MinY, obj.Envelope.MaxY, obj.Envelope.MinX, obj.Envelope.MaxX);
                         queue.Add(priority, obj);
                         obj.Distance = priority;
+                        distanceCalculated++;
                     }
                 }
                 else //object
@@ -109,7 +110,7 @@ namespace RTreeCodeApproach
             }
         }
 
-        public List<Restaurant> LoadData()
+        private List<Restaurant> LoadData()
         {
             var allRest = new List<Restaurant>();           
 
@@ -145,21 +146,28 @@ namespace RTreeCodeApproach
             Console.WriteLine("Dataloaded");
 
             var result = new List<ISpatialData>();
+
+            //Initializes a list of keywords to search for
             var keywords = new List<string>();
-            keywords.Add("Italian");
+            //keywords.Add("Italian");
             keywords.Add("Pizza");
-            keywords.Add("Pasta");
-            //keywords.Add("Hotdog");
+            //keywords.Add("Pasta");
             //keywords.Add("Burger");
+            //keywords.Add("American");
+            //keywords.Add("Pie");
+            //keywords.Add("Milkshake");
+            //keywords.Add("Fried chicken");
+            //keywords.Add("Corndogs");
 
             var sw = new Stopwatch();
             var timeList = new List<string>();
-            
 
-            for (int i = 0; i <= 100; i++)
+            Console.WriteLine("R tree Approach");
+
+            for (int i = 1; i <= 100; i++)
             {
                 sw.Start();
-                IncNearest(9.993267, 57.017825, tree, 30, keywords, out result);
+                IncNearest(57.04, 9.92, tree, 10, keywords, out result);
                 sw.Stop();
                 var time = sw.Elapsed.TotalMilliseconds;
                 timeList.Add(Convert.ToString(time));
@@ -167,12 +175,12 @@ namespace RTreeCodeApproach
                 sw.Reset();
             }
 
-            //IncNearest(9.993267, 57.017825, tree, 5, keywords, out result); //query location Føtex Aalborg Øst
-
             foreach (var rest in result)
             {
                 Console.WriteLine(rest);
             }
+
+            Console.WriteLine(distanceCalculated);
         }
     }
 }

@@ -10,11 +10,9 @@ namespace RTreeCodeApproach
     {
         static void Main(string[] args)
         {
-            var test = new Search();            
-            test.SearchWithINN();
+            var search = new Search();            
+            search.SearchWithINN();
             Console.ReadLine();
-
-            
         }
     }
 }
